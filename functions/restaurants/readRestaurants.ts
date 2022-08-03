@@ -1,16 +1,17 @@
 import { Handler } from "@netlify/functions";
-import fetch from "node-fetch";
+import { connectDatabase } from "../../db";
+import { RestaurantModel } from "../../models/RestaurantModel";
 
 export const readRestaurant: Handler = async (context, event) => {
-  const response = await fetch("https://random.dog/doggos");
-  const data = await response.json();
+  await connectDatabase();
+  const restaurants = await RestaurantModel.find({}).skip(0).limit(10);
 
-  if (Array.isArray(data)) {
+  if (restaurants) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        dogs: {
-          images: data.slice(0, 10).map((url) => `https://random.dog/${url}`),
+        restaurants: {
+          restaurant: restaurants.map((restaurant) => restaurant),
         },
       }),
     };
