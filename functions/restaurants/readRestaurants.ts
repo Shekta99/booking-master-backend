@@ -10,7 +10,7 @@ export const readRestaurant: Handler = async (context, event) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        restaurants: restaurants.map((restaurant) => restaurant.name),
+        restaurants: restaurants.map((restaurant) => restaurant),
       }),
     };
   } else {
