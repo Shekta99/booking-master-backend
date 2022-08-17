@@ -3,10 +3,16 @@ import { connectDatabase } from "../../db";
 import { RestaurantModel } from "../../models/RestaurantModel";
 
 export const createRestaurant: Handler = async (context, event) => {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+  };
   try {
     if (context.headers["content-type"] !== "application/json") {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({
           message: "Invalid content type, expected application/json",
         }),
@@ -34,6 +40,7 @@ export const createRestaurant: Handler = async (context, event) => {
 
       return {
         statusCode: 200,
+        headers,
         body: JSON.stringify({
           restaurant: newRestaurant,
         }),
@@ -49,6 +56,7 @@ export const createRestaurant: Handler = async (context, event) => {
   } catch (error) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({
         error,
       }),
