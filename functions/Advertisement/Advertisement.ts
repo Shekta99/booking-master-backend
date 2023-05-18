@@ -13,7 +13,7 @@ const handler: Handler = (event, context, callback) => {
       return readAdvertisement(event, context, callback);
     case "POST":
       return createAdvertisement(event, context, callback);
-    case "OPTIONeS":
+    case "OPTIONS":
       const allowCors: Handler = async (context, event) => {
         return { statusCode: 200, headers };
       };
