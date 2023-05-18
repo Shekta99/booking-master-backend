@@ -26,7 +26,8 @@ export const createAdvertisement: Handler = async (context, event) => {
       parsedBody &&
       "name" in parsedBody &&
       "imageURL" in parsedBody &&
-      "speciality" in parsedBody
+      "speciality" in parsedBody &&
+      "availability" in parsedBody
     ) {
       await connectDatabase();
 
@@ -34,6 +35,7 @@ export const createAdvertisement: Handler = async (context, event) => {
         name: parsedBody.name,
         imageURL: parsedBody.imageURL,
         speciality: parsedBody.speciality,
+        availability: parsedBody.availability,
       });
 
       await newAdvertisement.save();
@@ -42,7 +44,7 @@ export const createAdvertisement: Handler = async (context, event) => {
         statusCode: 200,
         headers,
         body: JSON.stringify({
-          restaurant: newAdvertisement,
+          advertisement: newAdvertisement,
         }),
       };
     } else {
