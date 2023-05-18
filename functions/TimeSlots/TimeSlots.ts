@@ -9,7 +9,7 @@ const handler: Handler = (event, context, callback) => {
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
   };
   switch (event.httpMethod) {
-    case "GET":
+    case "PUT":
       return readTimeSlot(event, context, callback);
     case "POST":
       return createTimeSlot(event, context, callback);
