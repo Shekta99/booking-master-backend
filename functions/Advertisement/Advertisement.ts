@@ -1,6 +1,6 @@
 import { Handler } from "@netlify/functions";
-import { createRestaurant } from "./createRestaurants";
-import { readRestaurant } from "./readRestaurants";
+import { createAdvertisement } from "./createAdvertisement";
+import { readAdvertisement } from "./readAdvertisement";
 
 const handler: Handler = (event, context, callback) => {
   const headers = {
@@ -10,10 +10,10 @@ const handler: Handler = (event, context, callback) => {
   };
   switch (event.httpMethod) {
     case "GET":
-      return readRestaurant(event, context, callback);
+      return readAdvertisement(event, context, callback);
     case "POST":
-      return createRestaurant(event, context, callback);
-    case "OPTIONS":
+      return createAdvertisement(event, context, callback);
+    case "OPTIONeS":
       const allowCors: Handler = async (context, event) => {
         return { statusCode: 200, headers };
       };

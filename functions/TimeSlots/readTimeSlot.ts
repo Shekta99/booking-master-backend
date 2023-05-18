@@ -1,22 +1,22 @@
 import { Handler } from "@netlify/functions";
 import { connectDatabase } from "../../db";
-import { IngredientModel } from "../../models/IngredientModel";
+import { TimeSlotModel } from "../../models/TimeSlotModel";
 
-export const readIngredient: Handler = async (context, event) => {
+export const readTimeSlot: Handler = async (context, event) => {
   await connectDatabase();
-  const ingredients = await IngredientModel.find({}).skip(0).limit(10);
+  const timeSlots = await TimeSlotModel.find({}).skip(0).limit(10);
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
   };
 
-  if (ingredients) {
+  if (timeSlots) {
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        ingredients: ingredients.map((ingredient) => ingredient),
+        timeSlots: timeSlots.map((timeSlot) => timeSlot),
       }),
     };
   } else {

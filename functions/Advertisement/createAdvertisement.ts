@@ -1,8 +1,8 @@
 import { Handler } from "@netlify/functions";
 import { connectDatabase } from "../../db";
-import { IngredientModel } from "../../models/IngredientModel";
+import { AdvertisementModel } from "../../models/AdvertisementModel";
 
-export const createIngredient: Handler = async (context, event) => {
+export const createAdvertisement: Handler = async (context, event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type",
@@ -26,30 +26,30 @@ export const createIngredient: Handler = async (context, event) => {
       parsedBody &&
       "name" in parsedBody &&
       "imageURL" in parsedBody &&
-      "kind" in parsedBody
+      "speciality" in parsedBody
     ) {
       await connectDatabase();
 
-      const newIngredient = new IngredientModel({
+      const newAdvertisement = new AdvertisementModel({
         name: parsedBody.name,
         imageURL: parsedBody.imageURL,
-        kind: parsedBody.kind,
+        speciality: parsedBody.speciality,
       });
 
-      await newIngredient.save();
+      await newAdvertisement.save();
 
       return {
         statusCode: 200,
         headers,
         body: JSON.stringify({
-          restaurant: newIngredient,
+          restaurant: newAdvertisement,
         }),
       };
     } else {
       return {
         statusCode: 400,
         body: JSON.stringify({
-          error: "Invalid input, name, imageURL and king are required",
+          error: "Invalid input, name, imageURL and specility are required",
         }),
       };
     }

@@ -1,15 +1,18 @@
 import { model, Schema } from "mongoose";
 
-export interface Restaurant {
+export interface Advertisement {
   name: string;
   imageURL: string;
   speciality: string;
 }
 
-const schema = new Schema<Restaurant>({
+const schema = new Schema<Advertisement>({
   name: { type: String, required: true },
   imageURL: { type: String, required: true },
   speciality: { type: String, required: true },
 });
 
-export const RestaurantModel = model<Restaurant>("restaurants", schema);
+export const AdvertisementModel = model<Advertisement>(
+  "advertisements",
+  schema
+);

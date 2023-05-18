@@ -1,6 +1,6 @@
 import { Handler } from "@netlify/functions";
-import { createIngredient } from "./createIngredient";
-import { readIngredient } from "./readIngredient";
+import { createTimeSlot } from "./createTimeSlot";
+import { readTimeSlot } from "./readTimeSlot";
 
 const handler: Handler = (event, context, callback) => {
   const headers = {
@@ -10,9 +10,9 @@ const handler: Handler = (event, context, callback) => {
   };
   switch (event.httpMethod) {
     case "GET":
-      return readIngredient(event, context, callback);
+      return readTimeSlot(event, context, callback);
     case "POST":
-      return createIngredient(event, context, callback);
+      return createTimeSlot(event, context, callback);
     case "OPTIONS":
       const allowCors: Handler = async (context, event) => {
         return { statusCode: 200, headers };

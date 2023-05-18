@@ -1,8 +1,8 @@
 import { Handler } from "@netlify/functions";
 import { connectDatabase } from "../../db";
-import { RestaurantModel } from "../../models/RestaurantModel";
+import { TimeSlotModel } from "../../models/TimeSlotModel";
 
-export const createRestaurant: Handler = async (context, event) => {
+export const createTimeSlot: Handler = async (context, event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type",
@@ -24,32 +24,32 @@ export const createRestaurant: Handler = async (context, event) => {
 
     if (
       parsedBody &&
-      "name" in parsedBody &&
-      "imageURL" in parsedBody &&
-      "speciality" in parsedBody
+      "place" in parsedBody &&
+      "day" in parsedBody &&
+      "hour" in parsedBody
     ) {
       await connectDatabase();
 
-      const newRestaurant = new RestaurantModel({
-        name: parsedBody.name,
-        imageURL: parsedBody.imageURL,
-        speciality: parsedBody.speciality,
+      const newTimeSlot = new TimeSlotModel({
+        place: parsedBody.place,
+        day: parsedBody.day,
+        hour: parsedBody.hour,
       });
 
-      await newRestaurant.save();
+      await newTimeSlot.save();
 
       return {
         statusCode: 200,
         headers,
         body: JSON.stringify({
-          restaurant: newRestaurant,
+          restaurant: newTimeSlot,
         }),
       };
     } else {
       return {
         statusCode: 400,
         body: JSON.stringify({
-          error: "Invalid input, name, imageURL and specility are required",
+          error: "Invalid input, place, day and hour are required",
         }),
       };
     }
