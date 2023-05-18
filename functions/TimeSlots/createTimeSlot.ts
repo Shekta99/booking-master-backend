@@ -24,6 +24,7 @@ export const createTimeSlot: Handler = async (context, event) => {
 
     if (
       parsedBody &&
+      "advertisement" in parsedBody &&
       "place" in parsedBody &&
       "day" in parsedBody &&
       "hour" in parsedBody
@@ -31,6 +32,7 @@ export const createTimeSlot: Handler = async (context, event) => {
       await connectDatabase();
 
       const newTimeSlot = new TimeSlotModel({
+        advertisement: parsedBody.advertisement,
         place: parsedBody.place,
         day: parsedBody.day,
         hour: parsedBody.hour,
