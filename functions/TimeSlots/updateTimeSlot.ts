@@ -1,7 +1,6 @@
 import { Handler } from "@netlify/functions";
 import { connectDatabase } from "../../db";
 import { TimeSlotModel } from "../../models/TimeSlotModel";
-import { ObjectId } from "mongodb";
 
 export const updateTimeSlot: Handler = async (context, event) => {
   const headers = {
@@ -25,7 +24,6 @@ export const updateTimeSlot: Handler = async (context, event) => {
 
     if (
       parsedBody &&
-      "advertisement" in parsedBody &&
       "place" in parsedBody &&
       "date" in parsedBody &&
       "hour" in parsedBody
@@ -33,13 +31,11 @@ export const updateTimeSlot: Handler = async (context, event) => {
       await connectDatabase();
 
       const TimeSlot = await TimeSlotModel.findOne({
-        advertisement: new ObjectId(parsedBody.advertisement),
         place: parsedBody.place,
         date: parsedBody.date,
         hour: parsedBody.hour,
       });
       console.log({
-        advertisement: parsedBody.advertisement,
         place: parsedBody.place,
         date: parsedBody.date,
         hour: parsedBody.hour,
