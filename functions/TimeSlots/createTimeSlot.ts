@@ -24,7 +24,7 @@ export const createTimeSlot: Handler = async (context, event) => {
 
     if (
       parsedBody &&
-      "park" in parsedBody &&
+      "advertisement" in parsedBody &&
       "place" in parsedBody &&
       "date" in parsedBody &&
       "hour" in parsedBody &&
@@ -33,7 +33,7 @@ export const createTimeSlot: Handler = async (context, event) => {
       await connectDatabase();
 
       const newTimeSlot = new TimeSlotModel({
-        park: parsedBody.park,
+        advertisement: parsedBody.advertisement,
         place: parsedBody.place,
         date: parsedBody.date,
         hour: parsedBody.hour,
@@ -54,7 +54,7 @@ export const createTimeSlot: Handler = async (context, event) => {
         statusCode: 400,
         headers,
         body: JSON.stringify({
-          error: "Invalid input, place, day and hour are required",
+          error: "Invalid input, place, date and hour are required",
         }),
       };
     }
