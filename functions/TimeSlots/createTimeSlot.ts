@@ -5,7 +5,7 @@ import { TimeSlotModel } from "../../models/TimeSlotModel";
 export const createTimeSlot: Handler = async (context, event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "X-Requested-With",
+    "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
   };
   try {
