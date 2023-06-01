@@ -1,6 +1,7 @@
 import { Handler } from "@netlify/functions";
 import { createTimeSlot } from "./createTimeSlot";
 import { readTimeSlot } from "./readTimeSlot";
+import { updateTimeSlot } from "./updateTimeSlot";
 
 const handler: Handler = (event, context, callback) => {
   const headers = {
@@ -13,6 +14,8 @@ const handler: Handler = (event, context, callback) => {
       return readTimeSlot(event, context, callback);
     case "POST":
       return createTimeSlot(event, context, callback);
+    case "DELETE":
+      return updateTimeSlot(event, context, callback);
     case "OPTIONS":
       const allowCors: Handler = async (context, event) => {
         return { statusCode: 200, headers };
