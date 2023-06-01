@@ -27,8 +27,7 @@ export const updateTimeSlot: Handler = async (context, event) => {
       "advertisement" in parsedBody &&
       "place" in parsedBody &&
       "date" in parsedBody &&
-      "hour" in parsedBody &&
-      "availability" in parsedBody
+      "hour" in parsedBody
     ) {
       await connectDatabase();
 
@@ -37,7 +36,6 @@ export const updateTimeSlot: Handler = async (context, event) => {
         place: parsedBody.place,
         date: parsedBody.date,
         hour: parsedBody.hour,
-        availability: parsedBody.availability,
       });
 
       if (TimeSlot) {
