@@ -46,12 +46,13 @@ export const createTimeSlot: Handler = async (context, event) => {
         statusCode: 200,
         headers,
         body: JSON.stringify({
-          restaurant: newTimeSlot,
+          timeslots: newTimeSlot,
         }),
       };
     } else {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({
           error: "Invalid input, place, day and hour are required",
         }),
