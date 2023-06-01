@@ -5,7 +5,7 @@ import { TimeSlotModel } from "../../models/TimeSlotModel";
 export const createTimeSlot: Handler = async (context, event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "X-Requested-With",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
   };
   try {
@@ -26,7 +26,7 @@ export const createTimeSlot: Handler = async (context, event) => {
       parsedBody &&
       "advertisement" in parsedBody &&
       "place" in parsedBody &&
-      "day" in parsedBody &&
+      "date" in parsedBody &&
       "hour" in parsedBody
     ) {
       await connectDatabase();
@@ -34,7 +34,7 @@ export const createTimeSlot: Handler = async (context, event) => {
       const newTimeSlot = new TimeSlotModel({
         advertisement: parsedBody.advertisement,
         place: parsedBody.place,
-        day: parsedBody.day,
+        date: parsedBody.date,
         hour: parsedBody.hour,
       });
 

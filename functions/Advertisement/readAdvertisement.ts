@@ -7,7 +7,7 @@ export const readAdvertisement: Handler = async (context, event) => {
   const advertisements = await AdvertisementModel.find({}).skip(0).limit(10);
   const headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "X-Requested-With",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
   };
 
