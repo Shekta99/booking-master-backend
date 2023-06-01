@@ -5,6 +5,7 @@ export interface TimeSlot {
   place: string;
   date: string;
   hour: string;
+  availability: boolean;
 }
 
 const schema = new Schema<TimeSlot>({
@@ -12,6 +13,7 @@ const schema = new Schema<TimeSlot>({
   place: { type: String, required: true },
   date: { type: String, required: true },
   hour: { type: String, required: true },
+  availability: { type: Boolean, required: true },
 });
 
 export const TimeSlotModel = model<TimeSlot>("timeslots", schema);
