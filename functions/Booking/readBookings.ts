@@ -40,14 +40,14 @@ export const readBookings: Handler = async (context, event) => {
           }),
         };
       } else {
-        return { statusCode: 404, headers };
+        return { statusCode: 200, body: "no bookings found", headers };
       }
     } else {
       return {
         statusCode: 400,
         headers,
         body: JSON.stringify({
-          error: "Invalid input advertisement id is required",
+          error: "Invalid input user is required",
         }),
       };
     }
