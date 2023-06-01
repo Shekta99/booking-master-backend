@@ -1,8 +1,8 @@
 import { Handler } from "@netlify/functions";
 import { connectDatabase } from "../../db";
-import { TimeSlotModel } from "../../models/TimeSlotModel";
+import { BookingModel } from "../../models/BookingsModel";
 
-export const readTimeSlot: Handler = async (context, event) => {
+export const readBookings: Handler = async (context, event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "X-Requested-With",
@@ -22,21 +22,21 @@ export const readTimeSlot: Handler = async (context, event) => {
     const { body } = context;
     const parsedBody = body && body.length > 0 ? JSON.parse(body) : null;
 
-    if (parsedBody && "advertisement" in parsedBody) {
+    if (parsedBody && "user" in parsedBody) {
       await connectDatabase();
 
-      const timeSlots = await TimeSlotModel.find({
-        advertisement: parsedBody.advertisement,
+      const bookings = await BookingModel.find({
+        user: parsedBody.user,
       })
         .skip(0)
         .limit(10);
 
-      if (timeSlots) {
+      if (bookings) {
         return {
           statusCode: 200,
           headers,
           body: JSON.stringify({
-            timeSlots: timeSlots.map((timeSlot) => timeSlot),
+            bookings: bookings.map((booking) => booking),
           }),
         };
       } else {

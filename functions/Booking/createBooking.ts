@@ -1,11 +1,11 @@
 import { Handler } from "@netlify/functions";
 import { connectDatabase } from "../../db";
-import { TimeSlotModel } from "../../models/TimeSlotModel";
+import { BookingModel } from "../../models/BookingsModel";
 
-export const readTimeSlot: Handler = async (context, event) => {
+export const createBooking: Handler = async (context, event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "X-Requested-With",
+    "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
   };
   try {
@@ -22,32 +22,39 @@ export const readTimeSlot: Handler = async (context, event) => {
     const { body } = context;
     const parsedBody = body && body.length > 0 ? JSON.parse(body) : null;
 
-    if (parsedBody && "advertisement" in parsedBody) {
+    if (
+      parsedBody &&
+      "advertisement" in parsedBody &&
+      "user" in parsedBody &&
+      "place" in parsedBody &&
+      "date" in parsedBody &&
+      "hour" in parsedBody
+    ) {
       await connectDatabase();
 
-      const timeSlots = await TimeSlotModel.find({
+      const newBooking = new BookingModel({
         advertisement: parsedBody.advertisement,
-      })
-        .skip(0)
-        .limit(10);
+        place: parsedBody.place,
+        date: parsedBody.date,
+        hour: parsedBody.hour,
+        user: parsedBody.user,
+      });
 
-      if (timeSlots) {
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({
-            timeSlots: timeSlots.map((timeSlot) => timeSlot),
-          }),
-        };
-      } else {
-        return { statusCode: 404, headers };
-      }
+      await newBooking.save();
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          bookings: newBooking,
+        }),
+      };
     } else {
       return {
         statusCode: 400,
         headers,
         body: JSON.stringify({
-          error: "Invalid input advertisement id is required",
+          error: "Invalid input, place, date and hour are required",
         }),
       };
     }
