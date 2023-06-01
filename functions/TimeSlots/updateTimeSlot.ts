@@ -37,6 +37,7 @@ export const updateTimeSlot: Handler = async (context, event) => {
         date: parsedBody.date,
         hour: parsedBody.hour,
       });
+      console.log(TimeSlot);
 
       if (TimeSlot) {
         TimeSlot.set({ availability: false });
